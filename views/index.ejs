@@ -1,11 +1,31 @@
 <!DOCTYPE html>
-<html>
-  <head>
-    <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
-  </head>
-  <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+        crossorigin="anonymous"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+    <title>myiot</title>
+</head>
+
+<body>
+    <div class="d-flex justify-content-center align-items-center vh-100">
+      <div class="card w-50 h-50 shadow rounded d-flex justify-content-evenly" >
+        <div class=" text-center">
+          <div >
+            <a class="btn btn-primary w-50 p-3" href="./signup" style="text-decoration: none;color:white">sign up</a>
+          </div>
+        </div>
+        <div class=" text-center">
+          <div >
+            <a class="btn btn-dark w-50 p-3" href="./signin"style="text-decoration: none;color:white">sign in</a>
+          </div>
+        </div>
+      </div>
+    </div>
   </body>
-</html>
