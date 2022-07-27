@@ -4,8 +4,8 @@ var signUp = require('../controllers/userSignUp')
 var signIn = require('../controllers/userSignin')
 const session = require("express-session");
 var OTPverify = require('../controllers/userOTP')
-
-const User = require("../models/user");
+const profile = require('../controllers/profile')
+const User = require("../models/User");
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -17,19 +17,7 @@ router.get('/signup',(req,res) =>{
   res.render('signup',{error:''})
 })
 
-router.get('/profile',async (req,res) =>{
-  console.log('loging cookie for profile::::')
-  console.log(req.session.cookie);
-  console.log(req.session.id);
-  if(req.session.userID){
-    let user = await User.findByPk(req.session.userID)
-    res.render('profile',{user:user})
-  }else{
-    console.log('redirecting here')
-    res.redirect('/signin')
-  }
- 
-})
+router.get('/profile',profile)
 
 router.post('/signup',signUp.signup)
 

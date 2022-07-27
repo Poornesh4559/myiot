@@ -1,5 +1,5 @@
 const session = require("express-session");
-const User = require("../models/user");
+const User = require("../models/User");
 
 exports.verify = async (req,res)=>{
     if (!req.session.userID){

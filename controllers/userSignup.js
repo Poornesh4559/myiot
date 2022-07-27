@@ -1,6 +1,6 @@
 const session = require("express-session");
 //const { where } = require("sequelize");
-const User = require("../models/user");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
 const { generateOTP, fast2sms } = require("../utils/otputil");

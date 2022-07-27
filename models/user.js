@@ -32,11 +32,11 @@ const User = sequelize.define('User', {
   tableName: 'users'
 });
 
-const userSync = async ()=>{
-    await User.sync({force:true});
+const Sync = async ()=>{
+    await sequelize.sync();
     // `sequelize.define` also returns the model
     console.log(User === sequelize.models.User); // true
 }
 
-//userSync();
+//Sync();
 module.exports = User;

@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../stylesheets/esp-style.css">
+    <title>boards</title>
+</head>
+
+<body>
+    <h2>ESP Output Control</h2>
+    
+    <br><br>
+    <br><br>
+    <div><form >
+        <h3>Create New Output</h3>
+        <label for="outputName">Name</label>
+        <input type="text" name="name" id="outputName"><br>
+        <label for="outputBoard">Board ID</label>
+        <input type="number" name="board" min="0" id="outputBoard">
+        <label for="outputGpio">GPIO Number</label>
+        <input type="number" name="gpio" min="0" id="outputGpio">
+        <label for="outputState">Initial GPIO State</label>
+        <select id="outputState" name="state">
+          <option value="0">0 = OFF</option>
+          <option value="1">1 = ON</option>
+        </select>
+        <input type="submit" value="Create Output">
+        <p><strong>Note:</strong> in some devices, you might need to refresh the page to see your newly created buttons or to remove deleted buttons.</p>
+    </form></div>
+
+    
+</body>
+</html>
