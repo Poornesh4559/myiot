@@ -4,7 +4,6 @@ var signUp = require('../controllers/userSignUp')
 var signIn = require('../controllers/userSignin')
 const session = require("express-session");
 var OTPverify = require('../controllers/userOTP')
-const profile = require('../controllers/profile')
 const User = require("../models/User");
 
 /* GET home page. */
@@ -17,14 +16,13 @@ router.get('/signup',(req,res) =>{
   res.render('signup',{error:''})
 })
 
-router.get('/profile',profile)
 
 router.post('/signup',signUp.signup)
 
 router.post('/otp', OTPverify.verify)
 router.get('/signin',async (req,res) =>{
   if(req.session.userID){
-    res.redirect('/profile')
+    res.redirect('/user')
   }else{
     res.render('signin',{error:""})
   }

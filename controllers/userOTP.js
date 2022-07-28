@@ -11,7 +11,7 @@ exports.verify = async (req,res)=>{
         console.log(req.body.otp)
         
        if (user.otp == req.body.otp){
-           res.render('profile',{user:user})
+           res.redirect('/user')
        }else{
            res.render('OTPverify', {phone:user.phone, error:'* in correct OTP'})
        }

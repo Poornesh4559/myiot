@@ -14,7 +14,7 @@ const signin = async (req, res) => {
       if (validPassword) {
         req.session.userID = user.id
         console.log("assigning here")
-        res.status(200).redirect('/profile');
+        res.status(200).redirect('/user');
       } else {
         res.status(400).render('signin',{ error: "Invalid Password" });
       }

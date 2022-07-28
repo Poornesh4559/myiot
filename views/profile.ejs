@@ -2,64 +2,115 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>Book and Reserve</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title>Book and Reserve</title>
 </head>
 
 <body>
-    <section style="background-color: #eee;">
-        
-        <div class="container py-5">
-      
-          <div class="row">
-            <div class="col-lg-4">
-              <div class="card mb-4">
-                <div class="card-body text-center">
-                  <img src="https://i.pinimg.com/736x/cb/45/72/cb4572f19ab7505d552206ed5dfb3739.jpg" alt="avatar" class="rounded-circle img-fluid" style="width: 150px;">
-                  <h5 class="my-3"><%= user.name %> </h5>
-                  <p class="text-muted mb-1"><%= user.phone %> </p>
-                  <p class="text-muted mb-4"></p>
-                  <div class="d-flex justify-content-center mb-2">
-                    <button type="button" class="btn btn-primary">Update</button>
-                    <a type="button" class="btn btn-outline-primary ms-1" href="./logout">Logout</a>
-                  </div>
-                </div>
+  <section style="background-color: #eee;">
+
+    <div class="container py-5">
+
+      <div class="row">
+        <div class="col-lg-4">
+          <div class="card mb-4">
+            <div class="card-body text-center">
+              <img src="https://i.pinimg.com/736x/cb/45/72/cb4572f19ab7505d552206ed5dfb3739.jpg" alt="avatar"
+                class="rounded-circle img-fluid" style="width: 150px;">
+              <h5 class="my-3">
+                <%= user.name %>
+              </h5>
+              <p class="text-muted mb-1">
+                <%= user.phone %>
+              </p>
+              <p class="text-muted mb-4">API KEY: <%= user.apiKey %>
+              </p>
+              <div class="d-flex justify-content-center mb-2">
+                <button type="button" class="btn btn-primary">Update</button>
+                <a type="button" class="btn btn-outline-primary ms-1" href="./logout">Logout</a>
               </div>
-            </div>
-            <div class="col-lg-8">
-              <div class="card mb-4">
-                <div class="card-body">
-                  <h3>Boards </h3>
-                </div>
-              </div>
-              <% boards.forEach((element) => { %>
-                <div class="card mb-4" style="background-color:rgba(255, 255, 255, 0) ;">
-                  <div class="card-body">
-                    <h6><%= element.name %> </h6>
-                  </div>
-                </div>
-              <% }) %>
-              
             </div>
           </div>
         </div>
-      </section>
+        <div class="col-lg-8">
+          <div class="card mb-4 d-flex justify-content-between">
+            <div class="card-body">
+              <h3>Boards </h3>
+            </div>
+            <a href="user/createBoard" class="btn btn-success btn-lg">ADD</a>
+          </div>
+          <% boards.forEach((element)=> { %>
+            <div class="card mb-4" style="background-color:rgba(255, 255, 255, 0.637) ;">
+              <div class="card-body">
+                <div class="row">
+                  <div class="col-md-8">
+                    <h6>
+                      <%= element.name %>
+                    </h6>
+                    <h6>id:<%= element.id %>
+                    </h6>
+                    <h6>description:<%= element.description %>
+                    </h6>
+                  </div>
+                  <div class="col-md-4">
+                    <div class="row justify-conten-between">
+                      <div class="col text-center">
+                        <a href="user/board/<%= element.id %> " class="btn btn-primary"
+                          style="text-decoration: none;color:white;">config</a>
+                      </div>
+                      <div class="col text-center">
+                        <a onclick="deleteBoard(this)" href="javascript:void(0);" id="<%= element.id %> "
+                          class="btn btn-danger" style="text-decoration: none;color:white;">delete</a>
+                      </div>
+                      
+                    </div>
+                    
+                  </div>
+                </div>
+
+
+
+              </div>
+            </div>
+            <% }) %>
+
+        </div>
+      </div>
+    </div>
+  </section>
 
 
 
 
 
-    <%- include('./partials/footer')  %> 
+  <%- include('./partials/footer') %>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
-    crossorigin="anonymous"></script>
+      integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+      crossorigin="anonymous"></script>
+
+    <script>
+      function deleteBoard(element) {
+        console.log(element.id)
+        var result = confirm("Want to delete this Board?");
+        if (result) {
+          var xhr = new XMLHttpRequest();
+
+          xhr.open("DELETE", "/user/deleteBoard/" + element.id);
+          //xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+          xhr.send();
+          alert("Output deleted");
+          setTimeout(function () { window.location.reload(); });
+        }
+      }
+    </script>
 </body>
 
 </html>

@@ -10,7 +10,7 @@ exports.signup = async (req, res) => {
   if (!(body.phone && body.name)) {
     return res.status(400).render("signup", { error: "invalid phone or name" });
   }
-  if ((body.password != body.conPassword)) {
+  if (body.password != body.conPassword) {
     return res
       .status(400)
       .render("signup", { error: " Password missmatching" });
@@ -24,16 +24,33 @@ exports.signup = async (req, res) => {
       // now we set user password to hashed password
       let password = await bcrypt.hash(body.password, salt);
       //generate otp
+      const crypto = require("crypto");
+
+      const rand = crypto.randomBytes(20);
+
+      let chars =
+        "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz"
+
+      let str = "";
+
+      for (let i = 0; i < rand.length; i++) {
+        let decimal = rand[i]%chars.length;
+        str += chars[decimal];
+      }
+
+      console.log(str);
       const otp = generateOTP(6);
       const person = await User.create({
         phone: body.phone,
         name: body.name,
         otp: otp,
-        password:password
+        password: password,
+        apiKey: str
+        
       });
       //send otp to phone number
       await fast2sms({
-        message: `It's form MyIot ,Your OTP is ${otp}`,
+        message: `Dear ${person.name} It's from MyIot ,Your OTP is ${otp}`,
         contactNumber: body.phone,
       });
       req.session.userID = person.id;

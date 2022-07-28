@@ -4,21 +4,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../stylesheets/esp-style.css">
+    <link rel="stylesheet" href="../../stylesheets/esp-style.css">
     <title>boards</title>
 </head>
 
 <body>
-    <h2>ESP Output Control</h2>
-    
+    <h2><%= board.name %>  Output Control</h2>
+    <% outputs.forEach(element => { %>
+        <% if (element.state == "1") { %>
+            <% var check = "checked" %>
+        <% } else { %>
+         <% var check = "" %> 
+         <% } %>
+        <h3><%= element.name %> - GPIO <%= element.gpio %><i><a onclick="deleteOutput(this)" href="javascript:void(0);" id=" <%= element.id %> ">Delete</a></i></h3><label class="switch"><input type="checkbox" onchange="updateOutput(this)" id="<%= element.id %> "<%= check %>  ><span class="slider"></span></label>
+    <% }) %>
     <br><br>
     <br><br>
-    <div><form >
+    <div><form method="post" action="<%=board.id  %>/output">
         <h3>Create New Output</h3>
         <label for="outputName">Name</label>
         <input type="text" name="name" id="outputName"><br>
-        <label for="outputBoard">Board ID</label>
-        <input type="number" name="board" min="0" id="outputBoard">
+        <!-- <label for="outputBoard">Board ID</label>
+        <input type="number" name="board" min="0" id="outputBoard"> -->
         <label for="outputGpio">GPIO Number</label>
         <input type="number" name="gpio" min="0" id="outputGpio">
         <label for="outputState">Initial GPIO State</label>
@@ -30,6 +37,32 @@
         <p><strong>Note:</strong> in some devices, you might need to refresh the page to see your newly created buttons or to remove deleted buttons.</p>
     </form></div>
 
-    
+    <script>
+        function updateOutput(element) {
+            var xhr = new XMLHttpRequest();
+            if(element.checked){
+                console.log(element.id);
+
+                xhr.open("PATCH", "/user/output/"+element.id+"/1", true);
+            }
+            else {
+                xhr.open("PATCH", "/user/output/"+element.id+"/0", true);
+            }
+            xhr.send();
+        }
+
+        function deleteOutput(element) {
+            console.log(element.id);
+            var result = confirm("Want to delete this output?");
+            if (result) {
+                var xhr = new XMLHttpRequest();
+                xhr.open("DELETE",String("/user/output/"+element.id).replace(" ",""), true);
+                xhr.send();
+                //alert("Output deleted");
+                setTimeout(function(){ window.location.reload(); });
+            }
+        }
+
+    </script>
 </body>
 </html>

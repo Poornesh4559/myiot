@@ -14,8 +14,13 @@ const Board = sequelize.define('board',{
         type:DataTypes.STRING,
         allowNull:false
     },
+    description:{
+        type:DataTypes.STRING,
+        allowNull:true
+    },
     lastReqested:{
         type:DataTypes.DATE,
+        defaultValue:DataTypes.NOW
     }
 },{
     tableName:'boards'

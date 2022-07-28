@@ -20,7 +20,7 @@ const Output = sequelize.define('output',{
     }
 })
 
-Board.hasMany(output,{
+Board.hasMany(Output,{
     foreignKey:{
         name:'boardId'
     }

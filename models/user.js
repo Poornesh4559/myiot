@@ -24,6 +24,10 @@ const User = sequelize.define('User', {
   },
   otp:{
     type: DataTypes.INTEGER
+  },
+  apiKey:{
+    type: DataTypes.STRING,
+    allowNull:false
   }
   
   
@@ -33,7 +37,7 @@ const User = sequelize.define('User', {
 });
 
 const Sync = async ()=>{
-    await sequelize.sync();
+    await sequelize.sync({force:true});
     // `sequelize.define` also returns the model
     console.log(User === sequelize.models.User); // true
 }

@@ -1,6 +1,5 @@
-
-const fast2sms = require("fast-two-sms");
-require('dotenv').config()
+var unirest = require("unirest");
+require("dotenv").config();
 
 exports.generateOTP = (otp_length) => {
   // Declare a digits variable
@@ -15,12 +14,27 @@ exports.generateOTP = (otp_length) => {
 
 exports.fast2sms = async ({ message, contactNumber }, next) => {
   try {
-    const res = await fast2sms.sendMessage({
-      authorization: process.env.FAST2SMS,
-      message,
-      numbers: [contactNumber],
+    var req = unirest("GET", "https://www.fast2sms.com/dev/bulkV2");
+
+    req.query({
+      "authorization": process.env.FAST2SMS,
+      "sender_id": "TXTIND",
+      "message": message,
+      "route": "v3",
+      "numbers": contactNumber
     });
-    console.log(res);
+
+    req.headers({
+      "cache-control": "no-cache",
+    });
+    req.end(function (res) {
+      if (res.error){
+        console.log(res.error);
+      }
+      
+    
+      console.log(res.body);
+    });
   } catch (error) {
     console.log(error);
   }
