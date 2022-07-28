@@ -1,9 +1,9 @@
 const session = require("express-session");
 //const { where } = require("sequelize");
-const User = require("../../models/User");
+const User = require("../models/User");
 const bcrypt = require("bcrypt");
 
-const { generateOTP, fast2sms } = require("../../utils/otputil");
+const { generateOTP, fast2sms } = require("../utils/otputil");
 
 exports.signup = async (req, res) => {
   var body = req.body;

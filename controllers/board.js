@@ -1,8 +1,8 @@
 const express = require("express");
 const session = require("express-session");
-const User = require("../../models/User");
-const Board = require("../../models/Board");
-const Output = require("../../models/Output");
+const User = require("../models/User");
+const Board = require("../models/Board");
+const Output = require("../models/Output");
 
 
 

@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var signUp = require('./controllers/userSignUp')
-var signIn = require('./controllers/userSignin')
+var signUp = require('../controllers/userSignUp')
+var signIn = require('../controllers/userSignin')
 const session = require("express-session");
-var OTPverify = require('./controllers/userOTP')
+var OTPverify = require('../controllers/userOTP')
 const User = require("../models/User");
 
 /* GET home page. */
