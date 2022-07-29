@@ -2,138 +2,134 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
-        integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
-        crossorigin="anonymous"></script>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
-    <title>myiot</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+    integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+    crossorigin="anonymous"></script>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+  <title>myiot</title>
 </head>
 
 <body>
-    <div class="row">
-        <div class="col-md-12">
-            <h1 class="text-center">myIOT</h1>
-        </div>
-        <div class="col-md-3 align-self-center">
-          <div class=" text-center">
-            <div >
-              <a class="btn btn-primary w-50 p-3 m-2" href="./signup" style="text-decoration: none;color:white">sign up</a>
-            </div>
-          </div>
-          <div class=" text-center">
-            <div >
-              <a class="btn btn-dark w-50 p-3 m-2" href="./signin"style="text-decoration: none;color:white">sign in</a>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-5 col-lg-9 ">
-          <p class="text-center">Copy the code below into your Ardunio IDE</p>
-          <pre style="display: block;height:70vh;overflow:auto;" class="bg-dark text-light rounded m-3">
-            <xmp>
-              #include <WiFi.h>
-                #include <HTTPClient.h>
-                #include <Arduino_JSON.h>
-                
-                const char* ssid = "REPLACE_WITH_YOUR_SSID";
-                const char* password = "REPLACE_WITH_YOUR_PASSWORD";
-                
-                //Your IP address or domain name with URL path
-                const char* serverName = "http://myiot/api/REPLACE_WITH_YOUR_API_KEY/REPLACE_WITH_YOUR_DEVICE_ID";
-                
-                // Update interval time set to 5 seconds
-                const long interval = 5000;
-                unsigned long previousMillis = 0;
-                
-                String outputsState;
-                
-                void setup() {
-                  Serial.begin(115200);
-                  
-                  WiFi.begin(ssid, password);
-                  Serial.println("Connecting");
-                  while(WiFi.status() != WL_CONNECTED) { 
-                    delay(500);
-                    Serial.print(".");
-                  }
-                  Serial.println("");
-                  Serial.print("Connected to WiFi network with IP Address: ");
-                  Serial.println(WiFi.localIP());
-                }
-                
-                void loop() {
-                  unsigned long currentMillis = millis();
-                  
-                  if(currentMillis - previousMillis >= interval) {
-                     // Check WiFi connection status
-                    if(WiFi.status()== WL_CONNECTED ){ 
-                      outputsState = httpGETRequest(serverName);
-                      Serial.println(outputsState);
-                      JSONVar myObject = JSON.parse(outputsState);
-                  
-                      // JSON.typeof(jsonVar) can be used to get the type of the var
-                      if (JSON.typeof(myObject) == "undefined") {
-                        Serial.println("Parsing input failed!");
-                        return;
-                      }
-                    
-                      Serial.print("JSON object = ");
-                      Serial.println(myObject);
-                    
-                      // myObject.keys() can be used to get an array of all the keys in the object
-                      JSONVar keys = myObject.keys();
-                    
-                      for (int i = 0; i < keys.length(); i++) {
-                        JSONVar value = myObject[keys[i]];
-                        Serial.print("GPIO: ");
-                        Serial.print(keys[i]);
-                        Serial.print(" - SET to: ");
-                        Serial.println(value);
-                        pinMode(atoi(keys[i]), OUTPUT);
-                        digitalWrite(atoi(keys[i]), atoi(value));
-                      }
-                      // save the last HTTP GET Request
-                      previousMillis = currentMillis;
-                    }
-                    else {
-                      Serial.println("WiFi Disconnected");
-                    }
-                  }
-                }
-                
-                String httpGETRequest(const char* serverName) {
-                  WiFiClient client;
-                  HTTPClient http;
-                    
-                  // Your IP address with path or Domain name with URL path 
-                  http.begin(client, serverName);
-                  
-                  // Send HTTP POST request
-                  int httpResponseCode = http.GET();
-                  
-                  String payload = "{}"; 
-                  
-                  if (httpResponseCode>0) {
-                    Serial.print("HTTP Response code: ");
-                    Serial.println(httpResponseCode);
-                    payload = http.getString();
-                  }
-                  else {
-                    Serial.print("Error code: ");
-                    Serial.println(httpResponseCode);
-                  }
-                  // Free resources
-                  http.end();
-                
-                  return payload;
-                }
-              </xmp>
-          </pre>
-        </div>
-
+  <div class="row" style="max-width:100vw ;">
+    <div class="col-md-12">
+      <h1 class="text-center py-3">myIOT</h1>
     </div>
-        
-  </body>
+    <div class="col-md-3 align-self-center">
+      <div class=" text-center">
+        <div>
+          <a class="btn btn-primary w-50 p-3 m-2" href="./signup" style="text-decoration: none;color:white">sign up</a>
+        </div>
+      </div>
+      <div class=" text-center">
+        <div>
+          <a class="btn btn-dark w-50 p-3 m-2" href="./signin" style="text-decoration: none;color:white">sign in</a>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-5 col-lg-9 ">
+      <div class="row">
+        <div class="col">
+          <h4 class="text-center">Copy the code below into your Ardunio IDE</h4>
+          <pre style="display: block;height:70vh;overflow:auto;" class="bg-dark text-light rounded m-3">
+                <xmp>
+                    #include <WiFi.h>
+                    #include <HTTPClient.h>
+                    #include <Arduino_JSON.h>
+                    
+                    const char* ssid = "REPLACE_WITH_YOUR_SSID";
+                    const char* password = "REPLACE_WITH_YOUR_PASSWORD";
+                    
+                    //Your IP address or domain name with URL path
+                    const char* serverName = "https://iot-con.herokuapp.com/api/REPLACE_WITH_YOUR_API_KEY/REPLACE_WITH_YOUR_DEVICE_ID";
+                    
+                    String outputsState;
+    
+                    void setup() {
+                    Serial.begin(115200);
+      
+                    WiFi.begin(ssid, password);
+                    Serial.println("Connecting");
+                    while(WiFi.status() != WL_CONNECTED) { 
+                      delay(500);
+                      Serial.print(".");
+                    }
+                    Serial.println("");
+                    Serial.print("Connected to WiFi network with IP Address: ");
+                    Serial.println(WiFi.localIP());
+                    }
+    
+                    void loop() {
+                        if(WiFi.status()== WL_CONNECTED ){ 
+                          outputsState = httpGETRequest(serverName);
+                          Serial.println(outputsState);
+                          // put your main code here, to run repeatedly:
+                          JSONVar myObject = JSON.parse(outputsState);
+                        
+                          // JSON.typeof(jsonVar) can be used to get the type of the var
+                                         if (JSON.typeof(myObject) == "undefined") {
+                            Serial.println("Parsing input failed!");
+                            return;
+                          }
+                        
+                          // myObject.keys() can be used to get an array of all the keys in the object
+                            JSONVar keys = myObject.keys();
+                            JSONVar value = myObject[keys[0]];
+                            for (int i = 0; i < value.length(); i++) {
+                            Serial.print("GPIO: ");
+                            Serial.print(value[i]["gpio"]);
+                            Serial.print(" - SET to: ");
+                            Serial.println(value[i]["state"]);
+                            pinMode(int(value[i]["gpio"]), OUTPUT);
+                            digitalWrite(int(value[i]["gpio"]), int(value[i]["state"]));
+                            
+                            }
+                      delay(5000); // this speeds up the simulation
+                          
+                          
+                      }
+                      else {
+                          Serial.println("WiFi Disconnected");
+                          return;
+                        }
+                    }
+    
+                    String httpGETRequest(const char* serverName) {
+                          HTTPClient client;
+                          client.begin(serverName);
+                          int httpCode = client.GET();
+                          String payload = {};
+                          if (httpCode > 0){
+                            payload = client.getString();
+                            Serial.println("\nStatus code:" + String(httpCode));
+                          }
+                          else{
+                            Serial.println("Error on http request"); 
+                          }
+                          return payload;
+                    }
+                  </xmp>
+              </pre>
+        </div>
+        <div class="col m-3">
+          <div class="card p-3">
+            <div class="card-title">
+              <h4 class="text-center">Get your API key and Device ID in your dashboard after login.</h4>
+              <div class="card-deck">
+                <p>replace <span style="color:orange;background-color: rgb(46, 60, 60);">REPLACE_WITH_YOUR_SSID</span> and <span style="color:orange;background-color: rgb(46, 60, 60);">REPLACE_WITH_YOUR_PASSWORD</span> with your <span style="color:orange;">ssid and password.</span></p>
+                <p>repalce <span style="color:orange;background-color: rgb(46, 60, 60);">REPLACE_WITH_YOUR_API_KEY</span> and <span style="color:orange;background-color: rgb(46, 60, 60);">REPLACE_WITH_YOUR_DEVICE_ID</span> wiht your<span style="color:orange;">API key and Device ID</span> in the above code.</p>
+                <p><span style="color:rgb(70, 7, 79);">Complie Run Enjoy....</span></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      
+    </div>
+
+  </div>
+  <%- include('./partials/footer') %>
+</body>
