@@ -5,6 +5,7 @@ var signIn = require('../controllers/userSignin')
 const session = require("express-session");
 var OTPverify = require('../controllers/userOTP')
 const User = require("../models/User");
+const forgetPass = require('../controllers/createPassword')
 
 /* GET home page. */
 router.get('/', function(req, res, next) {
@@ -24,7 +25,7 @@ router.get('/signin',async (req,res) =>{
   if(req.session.userID){
     res.redirect('/user')
   }else{
-    res.render('signin',{error:""})
+    res.render('signin',{error:"" ,success:""})
   }
   
 })
@@ -42,5 +43,15 @@ router.get('/logout', (req,res)=>{
     res.redirect('/')
   }
 })
+
+
+router.get('/forgetPassword',(req,res) =>{
+  res.render('forgetPass',{error:''})
+})
+
+
+
+router.post('/forgetPassword',forgetPass.otp);
+router.post('/createPassword/:phone',forgetPass.create);
 
 module.exports = router;

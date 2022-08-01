@@ -37,7 +37,12 @@
                     <form action="/signin" method="post">
                         <!-- Email input -->
                         <p class="text-center h1 fw-bold mb-5 mx-1 mx-md-4 mt-4">Sign In</p>
-                        <p class="text-danger mb-5 mx-1 mx-md-4 mt-4"><%= error %> </p>
+                        <p class="text-danger mb-5 mx-1 mx-md-4 mt-4"><% if (error) { %>
+                            <%= error %>
+                        <% } %> </p>
+                        <p class="text-success mb-5 mx-1 mx-md-4 mt-4"><% if (success) { %>
+                         <%= success %> 
+                        <% } %> </p>
                         <div class="form-outline mb-4">
                             <input type="number" id="phoneNO" class="form-control form-control-lg" name="phone"/>
                             <label class="form-label" for="phoneNO">Mobile number</label>
@@ -55,7 +60,7 @@
                                 <input class="form-check-input" type="checkbox" value="" id="form1Example3" checked />
                                 <label class="form-check-label" for="form1Example3"> Remember me </label>
                             </div>
-                            <a href="#!">Forgot password?</a>
+                            <a href="/forgetPassword">Forgot password?</a>
                         </div>
 
                         <!-- Submit button -->

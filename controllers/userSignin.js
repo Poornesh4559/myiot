@@ -16,10 +16,10 @@ const signin = async (req, res) => {
         console.log("assigning here")
         res.status(200).redirect('/user');
       } else {
-        res.status(400).render('signin',{ error: "Invalid Password" });
+        res.status(400).render('signin',{ error: "Invalid Password" ,success:""});
       }
     } else {
-      res.status(401).render('signin',{ error: "User not found" });
+      res.status(401).render('signin',{ error: "User not found" ,success:""});
     }
   }
   
